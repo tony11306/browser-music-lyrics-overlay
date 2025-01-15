@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <script>var exports = {};</script> <!-- https://stackoverflow.com/questions/43042889/typescript-referenceerror-exports-is-not-defined -->
+    <script src="../../../dist/infrastructure/electron/overlay_window/renderer.js"></script>
+</head>
+
+<body>
+    <div id="container">
+        <div class="">
+            <div class="horizontal-layout">
+                <div id="progress-bar" class="progress-bar-red" style="width:0%"></div>
+                <div class="progress-bar-knot"></div>
+            </div>
+        </div>
+        <div class="horizontal-layout">
+            <div id="song-title">
+                Open Youtube Music and play a song!
+            </div>
+            -
+            <div id="song-artists">
+            </div>
+
+        </div>
+
+        <div id="lyrics">
+            <span id="prev-lyrics"></span>
+            <span id="current-lyrics"></span>
+            <span id="next-lyrics"></span>
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>

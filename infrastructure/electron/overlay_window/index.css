@@ -1,0 +1,87 @@
+@font-face {
+    font-family: 'Yozai-Regular';
+    src: url('Yozai-Regular.ttf');
+}
+
+* {
+    /*-webkit-backdrop-filter: blur(10px);*/
+    /*backdrop-filter: blur(10px);*/
+    -webkit-app-region: drag;
+    font-family: 'Yozai-Regular';
+    color: rgba(240, 248, 255, 0.692);
+}
+
+.horizontal-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+body {
+    /* Hide scrollbars */
+    overflow: hidden;
+    background: transparent;
+    margin: 0;
+}
+
+#container {
+    overflow: hidden;
+    height: 100vh;
+    background-color: rgba(53, 53, 53, 0.659);
+    border-radius: 10px;
+    text-align: center;
+}
+
+#song-title {
+    margin: 5px;
+}
+
+.progress-bar-red {
+    margin: 2px;
+    background-color: rgb(200, 41, 41);
+    height: 2px;
+}
+
+.progress-bar-gray {
+    background-color: rgb(145, 145, 145);
+    height: 2px;
+}
+
+.progress-bar-knot {
+    margin: 2px;
+    background-color: rgb(200, 41, 41);
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    border-top: -5px;
+}
+
+.hidden-lyrics {
+    display: none;
+}
+
+#prev-lyrics {
+    color: rgb(99, 99, 99);
+    
+    font-size: 12px;
+    margin: 3px;
+    font-weight: 500;
+    transition: transform 0.1s;
+}
+
+#current-lyrics {
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 500;
+    margin: 3px;
+    transition: transform 0.2s;
+    text-shadow: 1px 1px 7px rgb(139, 151, 255);
+}
+
+#next-lyrics {
+    color: rgb(99, 99, 99);
+    font-size: 12px;
+    margin: 3px;
+    font-weight: 500;
+    transition: transform 0.1s;
+}
