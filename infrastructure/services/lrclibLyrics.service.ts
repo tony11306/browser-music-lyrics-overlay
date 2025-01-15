@@ -53,7 +53,7 @@ export class LrclibLyrics implements LyricsService {
         
         if (!response.ok) {
             this.storeLyricsInCache(song, null)
-            return null
+            return this.getLyricsUsingSearch(song)
         }
 
         const data: LrclibLyricsAPIResponse = await response.json()
@@ -63,6 +63,35 @@ export class LrclibLyrics implements LyricsService {
 
         this.storeLyricsInCache(song, lyrics)
         return lyrics
+    }
+
+    private async getLyricsUsingSearch(song: Song): Promise<Lyrics | null> {
+        const API = 'https://lrclib.net/api/search'
+        const queryParams = {
+            track_name: song.title,
+        }
+
+        const url = new URL(API)
+        url.search = new URLSearchParams(queryParams).toString()
+
+        const response = await fetch(url.toString())
+        if (!response.ok) {
+            return null
+        }
+
+        const data: LrclibLyricsAPIResponse[] = await response.json()
+
+        for (const result of data) {
+            if (result.trackName === song.title && result.syncedLyrics && Math.abs(result.duration - song.duration) <= 1) {
+                const lyrics = {
+                    lines: this.parseLyrics(result.syncedLyrics)
+                }
+                this.storeLyricsInCache(song, lyrics)
+                return lyrics
+            }
+        }
+
+        return null
     }
 
     private parseLyrics(lyrics: string): LyricsLine[] {

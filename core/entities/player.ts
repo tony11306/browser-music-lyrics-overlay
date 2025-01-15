@@ -18,6 +18,7 @@ export class Player {
     private _currentLyricsLine: LyricsLine | null = null;
     private _nextLyricsLine: LyricsLine | null = null;
     private _currentTime: number = 0;
+    private _lastTime: number = 0;
 
     get currentSong(): Song | null {
         return this._currentSong ? structuredClone(this._currentSong) : null;
@@ -39,6 +40,10 @@ export class Player {
         return this._currentTime;
     }
 
+    get lastTime(): number {
+        return this._lastTime;
+    }
+
     constructor(private syncLyricsService: SyncLyricsService) {
     }
 
@@ -47,18 +52,20 @@ export class Player {
         if (this.currentSong === null) {
             this._currentSong = song;
             DomainEventPublisher.instance.publish(new SongChanged(song, this.id));
-            await this.updateLyrics(0);
+            this._currentTime = 0;
+            await this.updateLyrics();
         } else {
             if (JSON.stringify(this.currentSong) !== JSON.stringify(song)) {
                 this._currentSong = song;
                 DomainEventPublisher.instance.publish(new SongChanged(song, this.id));
-                await this.updateLyrics(0);
+                this._currentTime = 0;
+                await this.updateLyrics();
             }
         }
 
     }
 
-    private async updateLyrics(currentTime: number) {
+    private async updateLyrics() {
         if (this.currentSong === null) {
             return;
         }
@@ -66,7 +73,7 @@ export class Player {
         if (await this.syncLyricsService.checkSongHasSyncedLyrics(this.currentSong) === false) {
             return;
         }
-        
+        /*
         let newCurrentLine = await this.syncLyricsService.getCurrentLine(this.currentSong, currentTime);
         
         if (newCurrentLine === this._currentLyricsLine) {
@@ -77,15 +84,40 @@ export class Player {
         this._previousLyricsLine = await this.syncLyricsService.getPreviousLine(this.currentSong, currentTime);
         this._nextLyricsLine = await this.syncLyricsService.getNextLine(this.currentSong, currentTime);
         DomainEventPublisher.instance.publish(new LyricsLineChanged(this.previousLyricsLine, this.currentLyricsLine, this.nextLyricsLine, this.id));
+        */
+
+        // means that the first time the song is played or the time got reset
+        if (this.currentLyricsLine === null || this.currentTime - this.lastTime !== 1) {
+            this._currentLyricsLine = await this.syncLyricsService.getCurrentLine(this.currentSong!, this.currentTime);
+            this._previousLyricsLine = await this.syncLyricsService.getPreviousLine(this.currentSong!, this.currentTime);
+            this._nextLyricsLine = await this.syncLyricsService.getNextLine(this.currentSong!, this.currentTime);
+            DomainEventPublisher.instance.publish(new LyricsLineChanged(this.previousLyricsLine, this.currentLyricsLine, this.nextLyricsLine, this.id));
+            return;
+        }
+
+        // since the time gets updated every second, there is a chance that within the same second, there are multiple lines
+        let sleptTime = 0
+        const nextSecond = this.currentTime + 1;
+        while (this.nextLyricsLine && this.currentLyricsLine && this.nextLyricsLine.timestamp < nextSecond) {
+            console.log(this.nextLyricsLine.timestamp, nextSecond)
+            // sleep
+            await new Promise(resolve => setTimeout(resolve, this.nextLyricsLine!.timestamp - Math.max(this.currentLyricsLine!.timestamp, this.currentTime) * 1000));
+            sleptTime += (this.nextLyricsLine!.timestamp - Math.max(this.currentLyricsLine!.timestamp, this.currentTime));
+            this._previousLyricsLine = this.currentLyricsLine;
+            this._currentLyricsLine = this._nextLyricsLine;
+            this._nextLyricsLine = await this.syncLyricsService.getNextLine(this.currentSong!, this.currentTime + sleptTime);
+            DomainEventPublisher.instance.publish(new LyricsLineChanged(this.previousLyricsLine, this.currentLyricsLine, this.nextLyricsLine, this.id));
+            
+        }
     }
 
     async updateCurrentTime(currentTime: number) {
         if (this.currentSong === null) {
             return;
         }
-
+        this._lastTime = this._currentTime;
         this._currentTime = currentTime;
         DomainEventPublisher.instance.publish(new CurrentTimeChanged(currentTime, this.id));
-        await this.updateLyrics(currentTime);
+        await this.updateLyrics();
     }
 }

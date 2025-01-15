@@ -12,12 +12,19 @@ window.socket.onclose = function () {
 window.socket.onopen = function () {
     console.log('connected')
 }
-
-console.log('youtubeMusicWorker.js loaded')
-// observer to detect changes in the DOM
-const progressBar = document.getElementById('progress-bar');
-const options = { attributes: true };
+console.log('spotifyWorker.js loaded')
+const time = document.getElementsByClassName('encore-text encore-text-marginal encore-internal-color-text-subdued IPbBrI6yF4zhaizFmrg6')[0]
+const options = { characterData: true, attributes: true, childList: false, subtree: true };
 window.observingChanges = true;
+console.log(time)
+const parseTimeToSeconds = (time) => {
+    const timeArray = time.split(':')
+    let seconds = 0
+    for (let i = 0; i < timeArray.length; i++) {
+        seconds += parseInt(timeArray[i]) * Math.pow(60, timeArray.length - 1 - i)
+    }
+    return seconds
+}
 
 let global_title = ''
 let global_artists = []
@@ -26,10 +33,10 @@ let global_timeInfo = ''
 const observer = new MutationObserver((mutations) => {
     // 'sliderKnobContainer'
     console.log('mutations')
-    const currentTime = progressBar.getElementsByClassName('slider-knob-inner style-scope tp-yt-paper-slider')[0].getAttribute('value')
-    const timeInfo = document.getElementsByClassName('time-info style-scope ytmusic-player-bar')[0].textContent.replaceAll(' ', '').replaceAll('\n', '')
-    const title = document.getElementsByClassName('title style-scope ytmusic-player-bar')[0].getAttribute('title')
-    const artistsElement = document.getElementsByClassName('byline style-scope ytmusic-player-bar')[0].getElementsByClassName('yt-simple-endpoint style-scope yt-formatted-string')
+    const title = document.getElementsByClassName('encore-text encore-text-body-small K9Nj3oI7bTNFh5AGp5GA')[0].textContent
+    const currentTime = parseTimeToSeconds(document.getElementsByClassName('encore-text encore-text-marginal encore-internal-color-text-subdued IPbBrI6yF4zhaizFmrg6')[0].textContent)
+    const timeInfo = time.textContent + '/' + document.getElementsByClassName('encore-text encore-text-marginal encore-internal-color-text-subdued kQqIrFPM5PjMWb5qUS56 DSdahCi0SDG37V9ZmsGO')[0].textContent
+    const artistsElement = document.getElementsByClassName('encore-text encore-text-marginal encore-internal-color-text-subdued w_TTPh4y9H1YD6UrTMHa')[0].getElementsByTagName('span')
     const artists = Array.from(artistsElement).map(artist => artist.textContent)
 
     if (isNaN(currentTime)) {
@@ -69,4 +76,4 @@ const observer = new MutationObserver((mutations) => {
     window.socket.send(JSON.stringify(message))
 });
 
-observer.observe(progressBar, options);
+observer.observe(time, options);

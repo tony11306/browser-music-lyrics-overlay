@@ -12,7 +12,8 @@
         "scripting"
     ],
     "host_permissions": [
-        "https://music.youtube.com/*"
+        "https://music.youtube.com/*",
+        "https://open.spotify.com/*"
     ],
     "background": {
         "service_worker": "index.js"
