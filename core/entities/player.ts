@@ -52,13 +52,21 @@ export class Player {
         if (this.currentSong === null) {
             this._currentSong = song;
             DomainEventPublisher.instance.publish(new SongChanged(song, this.id));
+            this._lastTime = 0;
             this._currentTime = 0;
+            this._previousLyricsLine = null;
+            this._currentLyricsLine = null;
+            this._nextLyricsLine = null;
             await this.updateLyrics();
         } else {
             if (JSON.stringify(this.currentSong) !== JSON.stringify(song)) {
                 this._currentSong = song;
                 DomainEventPublisher.instance.publish(new SongChanged(song, this.id));
+                this._lastTime = 0;
                 this._currentTime = 0;
+                this._previousLyricsLine = null;
+                this._currentLyricsLine = null;
+                this._nextLyricsLine = null;
                 await this.updateLyrics();
             }
         }
@@ -94,20 +102,17 @@ export class Player {
             DomainEventPublisher.instance.publish(new LyricsLineChanged(this.previousLyricsLine, this.currentLyricsLine, this.nextLyricsLine, this.id));
             return;
         }
-
         // since the time gets updated every second, there is a chance that within the same second, there are multiple lines
         let sleptTime = 0
         const nextSecond = this.currentTime + 1;
         while (this.nextLyricsLine && this.currentLyricsLine && this.nextLyricsLine.timestamp < nextSecond) {
-            console.log(this.nextLyricsLine.timestamp, nextSecond)
             // sleep
             await new Promise(resolve => setTimeout(resolve, this.nextLyricsLine!.timestamp - Math.max(this.currentLyricsLine!.timestamp, this.currentTime) * 1000));
             sleptTime += (this.nextLyricsLine!.timestamp - Math.max(this.currentLyricsLine!.timestamp, this.currentTime));
             this._previousLyricsLine = this.currentLyricsLine;
             this._currentLyricsLine = this._nextLyricsLine;
             this._nextLyricsLine = await this.syncLyricsService.getNextLine(this.currentSong!, this.currentTime + sleptTime);
-            DomainEventPublisher.instance.publish(new LyricsLineChanged(this.previousLyricsLine, this.currentLyricsLine, this.nextLyricsLine, this.id));
-            
+            DomainEventPublisher.instance.publish(new LyricsLineChanged(this.previousLyricsLine, this.currentLyricsLine, this.nextLyricsLine, this.id));   
         }
     }
 

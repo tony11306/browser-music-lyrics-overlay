@@ -76,6 +76,7 @@ body {
     margin: 3px;
     transition: transform 0.2s;
     text-shadow: 1px 1px 7px rgb(139, 151, 255);
+    box-shadow: 0 0 10px 0 rgb(139, 151, 255);
 }
 
 #next-lyrics {

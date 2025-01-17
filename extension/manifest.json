@@ -1,11 +1,10 @@
 {
-    "name": "Hello Extensions",
-    "description": "Base Level Extension",
+    "name": "Browser Music Lyrics Overlay Extension",
+    "description": "The extension that catch the music in browser tab, and send the information to Browser Music Lyrics Overlay.",
     "version": "1.0",
     "manifest_version": 3,
     "action": {
-        "default_popup": "hello.html",
-        "default_icon": "hello_extensions.png"
+        "default_icon": "icon.png"
     },
     "permissions": [
         "tabs",
@@ -15,7 +14,18 @@
         "https://music.youtube.com/*",
         "https://open.spotify.com/*"
     ],
-    "background": {
-        "service_worker": "index.js"
-    }
+    "content_scripts": [
+        {
+            "matches": ["https://music.youtube.com/*"],
+            "js": ["youtubeMusicWorker.js"],
+            "run_at": "document_end",
+            "all_frames": false
+        },
+        {
+            "matches": ["https://open.spotify.com/*"],
+            "js": ["spotifyWorker.js"],
+            "run_at": "document_end",
+            "all_frames": false
+        }
+    ]
 }

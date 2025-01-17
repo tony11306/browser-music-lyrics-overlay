@@ -1,7 +1,7 @@
 {
-  "name": "youtube-music-lyric-overlay",
+  "name": "desktop-music-lyrics-overlay",
   "version": "1.0.0",
-  "description": "An overlay window that display the current lyrics of the song you are playing in Youtube Music browser tab.",
+  "description": "An overlay window that display the current lyrics of the song you are playing in browser tab.",
   "main": "./dist/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -18,7 +18,6 @@
   "dependencies": {
     "typescript": "^5.7.3",
     "uuid": "^11.0.5",
-    "wink-eng-lite-model": "https://github.com/winkjs/wink-eng-lite-model/releases/download/1.3.1/wink-eng-lite-model-1.3.1.tgz",
     "ws": "^8.18.0"
   }
 }

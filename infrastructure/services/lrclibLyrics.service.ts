@@ -21,7 +21,6 @@ interface LrclibLyricsAPIResponse {
 
 export class LrclibLyrics implements LyricsService {
 
-    private static instance: LrclibLyrics
     private cache: Map<string, Lyrics | null> = new Map()
     private cacheTime: Map<string, Date> = new Map()
     private CACHE_SIZE = 10
@@ -31,6 +30,8 @@ export class LrclibLyrics implements LyricsService {
         if (this.cacheTime.has(JSON.stringify(song))) {
             return this.getLyricsFromCache(song)
         }
+        // serve as a lock to avoid multiple requests to the API
+        this.storeLyricsInCache(song, null)
         
         console.log('Fetching lyrics from API')
         //console.log(this.cache)
@@ -50,13 +51,12 @@ export class LrclibLyrics implements LyricsService {
         url.search = new URLSearchParams(queryParamsString).toString()
 
         const response = await fetch(url.toString())
+        const data: LrclibLyricsAPIResponse = await response.json()
         
-        if (!response.ok) {
-            this.storeLyricsInCache(song, null)
+        if (!response.ok || !data.syncedLyrics) {
+            //this.storeLyricsInCache(song, null)
             return this.getLyricsUsingSearch(song)
         }
-
-        const data: LrclibLyricsAPIResponse = await response.json()
         let lyrics = {
             lines: this.parseLyrics(data.syncedLyrics)
         }

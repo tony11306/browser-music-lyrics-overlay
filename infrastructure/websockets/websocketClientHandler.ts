@@ -48,8 +48,13 @@ export class WebSocketClientHandler {
                     duration: parseTimeInfoToSeconds(songInfoUpdateData.timeInfo),
                     playerId: this.playerId
                 };
-                console.log(updateSongInformationInput);
                 this.updateSongInformation.execute(updateSongInformationInput);
+
+                const currentTimeUpdateInput: UpdateCurrentTimeInput = {
+                    currentTime: songInfoUpdateData.currentTime,
+                    playerId: this.playerId
+                };
+                this.updateCurrentTime.execute(currentTimeUpdateInput);
                 break;
             case "CurrentTimeUpdate":
                 const currentTimeUpdateData = messageData as CurrentTimeUpdateData;
