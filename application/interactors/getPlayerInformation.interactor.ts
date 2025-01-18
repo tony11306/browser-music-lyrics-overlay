@@ -1,9 +1,22 @@
 import { PlayerRepository } from "../repositories/player.repository";
 import { GetPlayerInformation, PlayerInformation } from "../usecases/getPlayerInformation.usecase";
 
+/**
+ * Interactor for retrieving player information.
+ *
+ * @implements {GetPlayerInformation}
+ * @param {PlayerRepository} playerRepository - The repository for player data.
+ */
 export class GetPlayerInformationInteractor implements GetPlayerInformation {
     constructor(private playerRepository: PlayerRepository) { }
 
+    /**
+     * Retrieves player information for the given player ID.
+     *
+     * @param {string} playerId - The ID of the player to retrieve information for.
+     * @returns {Promise<PlayerInformation>} A promise that resolves to the player information.
+     * @throws {Error} If the player with the given ID is not found.
+     */
     async execute(playerId: string): Promise<PlayerInformation> {
         try {
             const player = this.playerRepository.getPlayer(playerId);

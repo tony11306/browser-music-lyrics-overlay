@@ -1,23 +1,45 @@
 {
-  "name": "desktop-music-lyrics-overlay",
+  "name": "browser-music-lyrics-overlay",
   "version": "1.0.0",
   "description": "An overlay window that display the current lyrics of the song you are playing in browser tab.",
   "main": "./dist/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "tsc",
-    "start": "npm run build && electron ."
+    "start": "npm run build && electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "author": "tony11306 <tony20020507@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@types/electron": "^1.6.12",
     "@types/ws": "^8.5.13",
-    "electron": "^33.3.1"
+    "electron": "^33.3.1",
+    "electron-builder": "^25.1.8",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "@types/jest": "^29.0.0"
   },
   "dependencies": {
     "typescript": "^5.7.3",
     "uuid": "^11.0.5",
     "ws": "^8.18.0"
+  },
+  "build": {
+    "appId": "1.0.0.browser-music-lyrics-overlay",
+    "productName": "browser-music-lyrics-overlay",
+    "directories": {
+      "output": "build"
+    },
+    "mac": {
+      "icon": "icon.png"
+    },
+    "win": {
+      "icon": "icon.png"
+    },
+    "linux": {
+      "icon": "icon.png"
+    }
   }
 }
