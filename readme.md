@@ -22,9 +22,12 @@ This is a Music lyrics overlay application inspired by [Music-LAW-Lyrics-AnyWher
 - **Cross-Platform Compatibility**: Compatible with both Linux and Windows (Mac untested).
 - **Lyrics Source**: Lyrics are sourced from [LRC Library](https://lrclib.net/), and therefore no certain language songs restricted as long as the songs are documented.
 
-## Showcase
+## Showcases
 
-![showcase](https://i.imgur.com/eJzTUd2.gif)
+![image](https://github.com/user-attachments/assets/a7b5ecbc-7acd-47f5-b36b-aa9768e801e9)
+
+![image](https://github.com/user-attachments/assets/178ee441-0568-4957-a704-68c770cc41ab)
+
 
 ## Installation
 
