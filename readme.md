@@ -1,4 +1,10 @@
+<!-- BADGES/ -->
+
+![example workflow](https://github.com/tony11306/browser-music-lyrics-overlay/actions/workflows/ci.yml/badge.svg) 
+
+<!-- /BADGES -->
 <div align="center">
+
 <img src="icon.png" alt="Browser Music Lyrics Overlay Icon" width="100" height="100">
 
 # Browser Music Lyrics Overlay
@@ -14,14 +20,16 @@ This is a Music lyrics overlay application inspired by [Music-LAW-Lyrics-AnyWher
 - **Real-time Lyrics**: Displays synchronized lyrics for the current song.
 - **Multi-Platform Support**: Works with both YouTube Music and Spotify.
 - **Cross-Platform Compatibility**: Compatible with both Linux and Windows (Mac untested).
-- **Minimalistic Overlay**: A clean and transparent overlay that stays on top of other windows.
+- **Lyrics Source**: Lyrics are sourced from [LRC Library](https://lrclib.net/), and therefore no certain language songs restricted as long as the songs are documented.
 
 ## Installation
 
-1. Clone the repository:
+### 1. Build an executable on your own
+1. Clone and cd to the repository:
     ```sh
-    git clone https://github.com/tony11306/youtube-music-lyrics-overlay.git
-    cd youtube-music-lyrics-overlay
+    git clone https://github.com/tony11306/browser-music-lyrics-overlay.git
+
+    cd browser-music-lyrics-overlay
     ```
 
 2. Install dependencies:
