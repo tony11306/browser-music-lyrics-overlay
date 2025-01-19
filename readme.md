@@ -24,6 +24,8 @@ This is a Music lyrics overlay application inspired by [Music-LAW-Lyrics-AnyWher
 
 ## Installation
 
+> This app only supports Chorme and Edge browser as it needs to load chrome extension.
+
 ### 1. Build an executable on your own
 1. Clone and cd to the repository:
     ```sh
@@ -37,21 +39,30 @@ This is a Music lyrics overlay application inspired by [Music-LAW-Lyrics-AnyWher
     npm install
     ```
 
-3. Build the project:
-    ```sh
-    npm run build
-    ```
-
-## Usage
-
-1. Start the Electron app:
+3. Build and Start the Electron app:
     ```sh
     npm start
     ```
 
-2. Load the browser extension:
+4. Load the browser extension:
     - Open Chrome and go to `chrome://extensions/`
     - Enable "Developer mode".
     - Click "Load unpacked" and select the `extension` folder from this project.
 
-3. Open YouTube Music or Spotify in a new tab and play a song. The overlay window will display the current song's title, artists, and lyrics.
+### 2. Download from released build
+1. Go to [release](https://github.com/tony11306/browser-music-lyrics-overlay/releases/tag/v1.0.0)
+2. Run overlay:
+    - Download and unzip Browser.Music.Lyrics.Overlay.rar
+    - Run the executable in side of it, that should open up the app window.
+3. Load the browser extension:
+    - Download extension.rar
+    - Go to extension management in your browser
+    - Enable developer mode
+    - Load the extension(unzip it before you load).
+
+## Usage
+
+Open YouTube Music or Spotify in a new tab and play a song. The overlay window will display the current song's title, artists, and lyrics.
+
+If you played a song, and the app does not update, make sure to refresh the page so that the extension can be correctly loaded.
+
