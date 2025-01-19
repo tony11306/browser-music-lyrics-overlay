@@ -1,7 +1,7 @@
 {
   "name": "browser-music-lyrics-overlay",
   "version": "1.0.0",
-  "description": "An overlay window that display the current lyrics of the song you are playing in browser tab.",
+  "description": "An overlay window that displays the current lyrics of the song you are playing in browser tab.",
   "main": "./dist/main.js",
   "scripts": {
     "test": "jest",

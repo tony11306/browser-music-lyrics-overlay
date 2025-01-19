@@ -24,7 +24,7 @@ const createWindow = () => {
         height: 200,
         resizable: true,
         frame: false,
-        focusable: false,
+        focusable: true,
         webPreferences: {
             preload: __dirname + '/infrastructure/electron/preload.js',
         },

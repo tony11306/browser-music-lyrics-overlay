@@ -13,7 +13,7 @@ This is a Music lyrics overlay application inspired by [Music-LAW-Lyrics-AnyWher
 
 - **Real-time Lyrics**: Displays synchronized lyrics for the current song.
 - **Multi-Platform Support**: Works with both YouTube Music and Spotify.
-- **Cross-Platform Compatibility**: Compatible with both Mac and Windows.
+- **Cross-Platform Compatibility**: Compatible with both Linux and Windows (Mac untested).
 - **Minimalistic Overlay**: A clean and transparent overlay that stays on top of other windows.
 
 ## Installation
