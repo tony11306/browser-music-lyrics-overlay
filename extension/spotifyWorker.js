@@ -1,7 +1,7 @@
 console.log('spotifyWorker.js loaded')
 
 function main() {
-    const time = document.getElementsByClassName('encore-text encore-text-marginal encore-internal-color-text-subdued IPbBrI6yF4zhaizFmrg6')[0]
+    const time = document.getElementsByClassName('IPbBrI6yF4zhaizFmrg6')[0]
     const options = { characterData: true, attributes: true, childList: false, subtree: true };
     window.observingChanges = true;
     const parseTimeToSeconds = (time) => {
@@ -21,10 +21,10 @@ function main() {
         if (window.socket.readyState !== WebSocket.OPEN) {
             return
         }
-        const title = document.getElementsByClassName('encore-text encore-text-body-small K9Nj3oI7bTNFh5AGp5GA')[0].textContent
-        const currentTime = parseTimeToSeconds(document.getElementsByClassName('encore-text encore-text-marginal encore-internal-color-text-subdued IPbBrI6yF4zhaizFmrg6')[0].textContent)
-        const timeInfo = time.textContent + '/' + document.getElementsByClassName('encore-text encore-text-marginal encore-internal-color-text-subdued kQqIrFPM5PjMWb5qUS56 DSdahCi0SDG37V9ZmsGO')[0].textContent
-        const artistsElement = document.getElementsByClassName('encore-text encore-text-marginal encore-internal-color-text-subdued w_TTPh4y9H1YD6UrTMHa')[0].getElementsByTagName('span')
+        const title = document.getElementsByClassName('K9Nj3oI7bTNFh5AGp5GA')[0].textContent
+        const currentTime = parseTimeToSeconds(document.getElementsByClassName('IPbBrI6yF4zhaizFmrg6')[0].textContent)
+        const timeInfo = time.textContent + '/' + document.getElementsByClassName('kQqIrFPM5PjMWb5qUS56 DSdahCi0SDG37V9ZmsGO')[0].textContent
+        const artistsElement = document.getElementsByClassName('w_TTPh4y9H1YD6UrTMHa')[0].getElementsByTagName('span')
         const artists = Array.from(artistsElement).map(artist => artist.textContent)
 
         if (isNaN(currentTime)) {
@@ -80,7 +80,7 @@ window.socket.onopen = onOpen;
 
 new Promise((resolve, reject) => {
     const checkExist = setInterval(() => {
-        if (document.getElementsByClassName('encore-text encore-text-marginal encore-internal-color-text-subdued IPbBrI6yF4zhaizFmrg6').length) {
+        if (document.getElementsByClassName('IPbBrI6yF4zhaizFmrg6').length) {
             clearInterval(checkExist);
             resolve();
         }
